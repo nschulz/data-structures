@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Nate's Hash Table Runner</title>
+	<meta name="generator" content="BBEdit 10.5" />
+	<script type="text/javascript" src="WORDS_LIST.js"></script>
+	<script type="text/javascript" src="NatesHashTable.js"></script>
+	<script type="text/javascript" src="NatesDataObject.js"></script>
+	<style>
+		html, body {
+			height: 100%;
+		}
+		
+		textarea {
+			height: 98%;
+		}
+	</style>
+</head>
+<body>
+<textarea id="results">
+
+</textarea>
+<script type="text/javascript">
+	var outputArea = document.getElementById('results');
+	function logger(str, clear) {
+		if (clear) {
+			return (outputArea.value = str);
+		}
+		return (outputArea.value += "\n" + str);
+	}
+	setTimeout(function() {
+	var theHashTable = new NatesHashTable(WORDS_LIST.length*2.31),
+		startTime = Date.now(),
+		i = 0,
+		len = 0,
+		count = 0;
+	
+	for (i = 0, len = WORDS_LIST.length; i < len; i++) {
+		if (theHashTable.insert(new NatesDataObject(WORDS_LIST[i]))) {
+			count++;
+		} else {
+			break;
+		}
+	}
+	
+	logger(count + " items hashed in " + (Date.now() - startTime) + "ms");
+	logger((count/(WORDS_LIST.length*2.31)) + " coverage");
+		
+	logger(theHashTable.toString());
+}, 250);
+</script>
+</body>
+</html>
